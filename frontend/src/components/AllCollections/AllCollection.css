@@ -1,0 +1,38 @@
+.all-collection-down{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr  ;
+    margin-top: 30px;
+    
+}
+.all-collection-up{
+    display: flex;
+    justify-content:  space-between;
+    margin-top: 20px;
+    
+}
+
+.all-collection-topic{
+    font-size: 24px;
+    display: flex;
+}
+.all-collection-topic p{
+    color: #707070;
+}
+.all-collection-topic span{
+    color: black;
+}
+
+.all-collectin-bar{
+    width: 30px;
+    height:2px;
+    background-color: #707070;
+    border: none;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 15px;
+}
+.sort-dropdown{
+    border: 1px solid #707070;
+    padding: 10px;
+    width: 30%;
+}
