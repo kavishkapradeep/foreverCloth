@@ -1,7 +1,6 @@
 import './Fillters.css'
 import React from 'react'
 
-const Filters = () => {
   return (
     <div className='filters-container'>
         <h2>Filtters</h2>
