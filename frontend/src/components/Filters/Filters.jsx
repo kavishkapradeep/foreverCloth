@@ -1,24 +1,48 @@
+
+import { StoreContext } from '../../context/StoreContext';
 import './Fillters.css'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+
+const Filters = () => {
+
+  const [isOpen,setIsOpen] =useState(false);
+  const {category,setFilterProducts,applyFilter,toggleCategory,subCategory,products,toggleSubCategory} =useContext(StoreContext)
+
+  
+  useEffect(()=>{
+    console.log(subCategory);
+    
+  },[subCategory])
+
+  
+  useEffect(() => {
+    setFilterProducts(products)
+  },[products])
+    
+  useEffect(()=>{
+    applyFilter();
+  },[category,subCategory]);
 
   return (
     <div className='filters-container'>
-        <h2>Filtters</h2>
+        <h2 onClick={()=>setIsOpen(!isOpen)}>Filtters</h2>
+        <div className={`filter ${isOpen?"active":""}`}>
         <div className="categories">
             <p>CATEGORIES</p>
             <ul className="categories-checkbox">
-            <li><input type="checkbox" />Men</li>
-            <li><input type="checkbox" />Women</li>
-            <li><input type="checkbox" />Kids</li>
+            <li><input type="checkbox" value={'Men'}  onChange={toggleCategory}/>Men</li>
+            <li><input type="checkbox" value={'Women'}  onChange={toggleCategory}/>Women</li>
+            <li><input type="checkbox"  value={'Kids'}  onChange={toggleCategory}/>Kids</li>
             </ul>           
         </div>
         <div className="categories">
             <p>Type</p>
             <ul className="categories-checkbox">
-            <li><input type="checkbox" />Topwear</li>
-            <li><input type="checkbox" />Bottemwear</li>
-            <li><input type="checkbox" />Winterwear</li>
+            <li><input type="checkbox" value={'Topwear'}  onChange={toggleSubCategory}/>Topwear</li>
+            <li><input type="checkbox" value={'Bottomwear'} onChange={toggleSubCategory}/>Bottomwear</li>
+            <li><input type="checkbox" value={'Winterwear'}  onChange={toggleSubCategory}/>Winterwear</li>
             </ul>
+        </div>
         </div>
     </div>
   )

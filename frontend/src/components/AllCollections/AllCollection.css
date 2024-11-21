@@ -3,6 +3,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr  ;
     margin-top: 30px;
     
+    
 }
 .all-collection-up{
     display: flex;
@@ -35,4 +36,37 @@
     border: 1px solid #707070;
     padding: 10px;
     width: 30%;
+}
+
+#sort{
+    border: none;
+    font-size: 14px;
+}
+.sort-dropdown label{
+    color: #7a7a7a;
+}
+
+@media (max-width:750px) {
+    .all-collection-down{
+        display: grid;
+        grid-template-columns: 1fr 1fr ;
+    }
+    .sort-dropdown{
+        font-size: 2px;
+        outline: none;
+        width: 50%;
+        height: auto;
+        margin-right: 10px;
+    }
+    .all-collection-topic{
+        font-size: 12px;
+        display: flex;
+        flex-direction: row;
+    }
+    .all-collectin-bar{
+        display: none;
+        width: 10px;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
 }

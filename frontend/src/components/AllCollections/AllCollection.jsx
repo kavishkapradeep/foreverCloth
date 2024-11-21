@@ -6,12 +6,8 @@ import React, { useContext, useEffect, useState } from "react";
 const AllCollection = () => {
 
     
-    const {products} =useContext(StoreContext)
-    const [allCollection,setAllCollection] =useState([]);
-
-    useEffect(()=>{
-        setAllCollection(products)
-    })
+    const {filterProducts} =useContext(StoreContext)
+    
   return (
     <div className="allCollection-container">
       <div className="all-collection-up">
@@ -33,10 +29,10 @@ const AllCollection = () => {
       </div>
       <div className="all-collection-down">
           {
-            allCollection.map((item,i)=>{
-                return <Item key={i} image={item.image} 
-                name={item.name} price={item.price}/>
-            })
+            filterProducts.map((item,i)=>{
+              return <Item key={i} id={item._id} image={item.image} 
+              name={item.name} price={item.price}/>
+          })
           }
             
       </div>

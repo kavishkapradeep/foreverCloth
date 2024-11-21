@@ -1,9 +1,12 @@
 import './Footer.css'
 import {assets} from '../../assets/assets'
 import React from 'react'
+import Subcribe from '../Subctribe/Subcribe'
 
 const Footer = () => {
   return (
+      <>
+      <Subcribe/>
     <div className="footer">
     <div className='footer-content'>
         <div className="footer-left">
@@ -32,7 +35,9 @@ const Footer = () => {
         Copyright 2024 @forever.com - All  Right Reserved
     </p>
     </div>
+    </>
   )
+  
 }
 
 export default Footer

@@ -25,3 +25,32 @@
     
     
 }
+
+@media (max-width:950px) {
+    
+}
+
+@media (max-width:750px) {
+    .categories p{
+        font-size: 10px;
+        
+    }
+    .categories-checkbox li{
+        
+        display: flex;
+        font-size: 12px;
+        margin-left: 30px;
+        gap: 30px;
+    }
+    
+    .filters-container h2{
+        font-size: 14px
+    }
+    .filter{
+        display: none;
+    }
+    .filter.active{
+        display: flex;
+        flex-direction: column;
+    }
+}

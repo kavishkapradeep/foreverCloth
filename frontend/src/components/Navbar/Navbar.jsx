@@ -3,7 +3,7 @@ import {assets} from '../../assets/assets'
 import {Link, Navigate, useNavigate} from 'react-router-dom'
 import React, { useState } from 'react'
 
-const Navbar = () => {
+const Navbar = ({setShowLogin}) => {
 
     const[menu,setMenu] =useState("home");
     const navigate =useNavigate();
@@ -25,7 +25,7 @@ const Navbar = () => {
         <div className="navbar-right">
             <img src={assets.search_icon} alt="" />
             <div className="navbar-profile">
-                <Link><img src={assets.profile_icon} alt="" /></Link>
+                <Link onClick={()=>{setShowLogin(true)}}><img src={assets.profile_icon} alt="" /></Link>
                 <ul className="navbar-profile-dropdown">
                     <li onClick={()=>navigate('/myorders')}><p>Orders</p></li>
                     <hr />

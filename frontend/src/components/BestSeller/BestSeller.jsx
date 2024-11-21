@@ -13,6 +13,7 @@ const BestSeller = () => {
 
     //load data in file
     useEffect(()=>{
+      
         setBestSeller(products.slice(0,5));
     })
 
@@ -26,7 +27,7 @@ const BestSeller = () => {
          
          <div className="bestSeller-container">
             {bestSELLER.map((item,i)=>{
-                return <Item key={i} id={item.id} image={item.image} name={item.name}
+                return <Item key={i} id={item._id} image={item.image} name={item.name}
                 price={item.price}/>
             })}
              
