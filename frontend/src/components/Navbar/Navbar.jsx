@@ -1,7 +1,8 @@
 import './Navbar.css'
 import {assets} from '../../assets/assets'
-import {Link, Navigate, useNavigate} from 'react-router-dom'
-import React, { useState } from 'react'
+import {Link, Navigate, useLocation, useNavigate} from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { StoreContext } from '../../context/StoreContext'
 
 const Navbar = ({setShowLogin}) => {
 
@@ -9,10 +10,24 @@ const Navbar = ({setShowLogin}) => {
     const navigate =useNavigate();
     //sidebar setup
     const [isOpen,setIsOpen] = useState(false);
+    const [isSOpen,setIsSOpen] =useState(false)
+    const {search,setSearch,visible,setVisible} =useContext(StoreContext);
+    const loaction =useLocation();
+
+    useEffect(()=>{
+        if (location.pathname.includes('collection') && isSOpen) {
+            setVisible(true);
+        }else{
+            setVisible(false)
+        }
+        
+    },[loaction])
     
 
   return (
+    <div className="navbar-container">
     <div className='navbar'>
+        
         <Link to='/' ><img src={assets.logo} alt=""  className='logo' /></Link>
                         
         <ul className={`navbar-menu ${isOpen?"active":""}`}>         
@@ -23,7 +38,8 @@ const Navbar = ({setShowLogin}) => {
         </ul>
         
         <div className="navbar-right">
-            <img src={assets.search_icon} alt="" />
+            
+            <img onClick={()=>setIsSOpen(!isSOpen)} src={assets.search_icon} alt="" />
             <div className="navbar-profile">
                 <Link onClick={()=>{setShowLogin(true)}}><img src={assets.profile_icon} alt="" /></Link>
                 <ul className="navbar-profile-dropdown">
@@ -40,6 +56,13 @@ const Navbar = ({setShowLogin}) => {
                 <img src={assets.menu_icon} alt="" onClick={()=>setIsOpen(!isOpen)}/>
             </div>
         </div>
+    </div>
+    <div className={`navbar-search ${isSOpen?"active":""}`}>
+        <div className="search">
+        <input  type="text" placeholder='Search Here' value={search} onChange={(e)=>setSearch(e.target.value)} />
+        <img  onClick={()=>setIsSOpen(isOpen)} src={assets.cross_icon} alt="" />
+        </div>
+    </div>
     </div>
   )
 }

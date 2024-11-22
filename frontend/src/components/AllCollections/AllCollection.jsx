@@ -6,8 +6,21 @@ import React, { useContext, useEffect, useState } from "react";
 const AllCollection = () => {
 
     
-    const {filterProducts} =useContext(StoreContext)
+    const {filterProducts,applyFilter,category,subCategory,search,sortProducts,setSortType,sortType,visible,setVisible} =useContext(StoreContext)
     
+    
+    useEffect(()=>{
+      sortProducts();
+    },[sortType])
+
+    useEffect(()=>{
+      applyFilter();
+    },[category,subCategory,search])
+
+    
+
+   
+
   return (
     <div className="allCollection-container">
       <div className="all-collection-up">
@@ -19,7 +32,8 @@ const AllCollection = () => {
         </div>
         <div class="sort-dropdown">
           <label for="sort">Sort by:</label>
-          <select id="sort" name="sort">
+          <select onChange={(e)=>setSortType(e.target.value)} id="sort" name="sort">
+            <option value="relavent">Relavent</option>
             <option value="low-to-high">Price: Low To High</option>
             <option value="high-to-low">Price: High To Low</option>
             <option value="newest">Newest</option>

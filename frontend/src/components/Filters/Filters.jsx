@@ -9,15 +9,8 @@ const Filters = () => {
   const {category,setFilterProducts,applyFilter,toggleCategory,subCategory,products,toggleSubCategory} =useContext(StoreContext)
 
   
-  useEffect(()=>{
-    console.log(subCategory);
-    
-  },[subCategory])
-
   
-  useEffect(() => {
-    setFilterProducts(products)
-  },[products])
+  
     
   useEffect(()=>{
     applyFilter();

@@ -11,6 +11,10 @@ const StoreContextProvider = (props) => {
     const [category,setCategory] =useState([])
     const [subCategory,setSubCategory]=useState([]);
     const [filterProducts,setFilterProducts]=useState([]);
+    const [sortType,setSortType] =useState("relavent")
+    const [search,setSearch] =useState('')
+    const [visible,setVisible] =useState(false)
+
 
   const toggleCategory=(e)=>{
     if (category.includes(e.target.value)) {
@@ -32,11 +36,12 @@ const StoreContextProvider = (props) => {
   
   const applyFilter =()=>{
     let productsCopy = products.slice();
+
+    if (search.length>0) {
+      productsCopy =productsCopy.filter(item =>  item.name.toLowerCase().includes(search.toLowerCase()))
+    }
     if (category.length>0) {
         productsCopy=productsCopy.filter(item=>category.includes(item.category));
-    } else {
-     console.log("Error");
-      
     }
     if (subCategory.length>0) {
       productsCopy=productsCopy.filter((item)=>subCategory.includes(item.subCategory));
@@ -44,6 +49,29 @@ const StoreContextProvider = (props) => {
     setFilterProducts(productsCopy)
   } ;
 
+  //sort Product
+  const sortProducts =()=>{
+    let fpCopy =filterProducts.slice();
+
+    switch (sortType) {
+      case "low-to-high":
+        setFilterProducts(fpCopy.sort((a,b)=>a.price-b.price));
+        break;
+      case "high-to-low" :
+        setFilterProducts(fpCopy.sort((a,b)=>b.price-a.price));
+        break;
+
+      case "newest":
+        setFilterProducts(fpCopy.sort((a,b)=> new Date(b.date)- new Date(a.date)))
+        break;
+      default:
+        applyFilter();
+        break;
+    }
+  }
+
+  //sort Search 
+  
   
 
  
@@ -58,7 +86,11 @@ const StoreContextProvider = (props) => {
         toggleSubCategory,
         subCategory,setSubCategory,
         applyFilter,setFilterProducts,
-        filterProducts
+        filterProducts,
+      sortProducts,
+        setSortType,
+        sortType,search,setSearch,
+        visible,setVisible
         
     }
   

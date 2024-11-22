@@ -26,8 +26,17 @@
     
 }
 
-@media (max-width:950px) {
-    
+@media (max-width:980px) {
+    .categories p{
+        font-size: 12px;
+    }
+    .categories-checkbox li{
+        font-size: 10px;
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        gap: 20px;
+    }
 }
 
 @media (max-width:750px) {
