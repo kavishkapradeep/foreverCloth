@@ -1,0 +1,56 @@
+.checkout{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    
+
+}
+.cart-left{
+    display: flex;
+    flex-direction: column;
+}
+.cart-name-topic
+{  margin-top: 8px;
+    width: 50%;
+    font-size: 16px;
+    padding: 8px;
+}
+
+.checkout-title{
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+.checkout-title span{
+    color: #7a7a7a;
+}
+.cart-personal{
+    width: 100%;
+    font-size: 16px;
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.cart-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart-right button{
+    padding: 8px;
+    width: 60%;
+    font-size: 18px;
+    color: white;
+    background-color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+@media (max-width:750px) {
+    .checkout{
+        display: flex;
+        flex-direction: column;
+    }
+}

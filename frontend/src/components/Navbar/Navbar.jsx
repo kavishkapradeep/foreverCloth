@@ -11,7 +11,7 @@ const Navbar = ({setShowLogin}) => {
     //sidebar setup
     const [isOpen,setIsOpen] = useState(false);
     const [isSOpen,setIsSOpen] =useState(false)
-    const {search,setSearch,visible,setVisible} =useContext(StoreContext);
+    const {search,setSearch,visible,setVisible,getCartCount} =useContext(StoreContext);
     const loaction =useLocation();
 
     useEffect(()=>{
@@ -45,12 +45,12 @@ const Navbar = ({setShowLogin}) => {
                 <ul className="navbar-profile-dropdown">
                     <li onClick={()=>navigate('/myorders')}><p>Orders</p></li>
                     <hr />
-                    <li><p>LogOut</p></li>
+                    <li ><p>LogOut</p></li>
                 </ul>
             </div>
             <div className="navbar-search-icon">
-                <Link><img src={assets.cart_icon} alt="" /></Link>
-                <div className="dot"><p className='cart'>2</p></div>
+                <Link to='/cart'><img src={assets.cart_icon} alt="" /></Link>
+                <div className="dot"><p className='cart' >{getCartCount()}</p></div>
             </div>
             <div className="navbar-sidebar">
                 <img src={assets.menu_icon} alt="" onClick={()=>setIsOpen(!isOpen)}/>

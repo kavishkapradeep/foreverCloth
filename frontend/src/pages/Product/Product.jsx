@@ -3,18 +3,19 @@ import ProductDisplay from '../../components/ProductDisplay/ProductDisplay'
 import { StoreContext } from '../../context/StoreContext'
 import './Product.css'
 
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import Description from '../../components/Description/Description'
+import RelatedProduct from '../../components/RelatedProduct/RelatedProduct'
 
 const Product = () => {
-    const {allProduct} = useContext(StoreContext)
-    const {productId} =useParams();
-    console.log(productId);
-    const  product =allProduct.find((e)=>e._id===productId)
+    
   return (
     <div>
-        console.log(product);
         
-        <ProductDisplay product={product}/>
+        
+        <ProductDisplay />
+        
+        
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import  { createContext, useEffect, useState } from 'react'
 import { products } from '../assets/assets.js'
+import { toast } from 'react-toastify'
 
 
 export const StoreContext = createContext(null)
@@ -14,7 +15,10 @@ const StoreContextProvider = (props) => {
     const [sortType,setSortType] =useState("relavent")
     const [search,setSearch] =useState('')
     const [visible,setVisible] =useState(false)
-
+    const [sizes,setSizes]=useState('')
+    const [productData,setProductData]= useState(false)
+    const [cartItem,setCartItems]= useState({});
+    const [cartData,setCartData] =useState([]);
 
   const toggleCategory=(e)=>{
     if (category.includes(e.target.value)) {
@@ -70,11 +74,89 @@ const StoreContextProvider = (props) => {
     }
   }
 
-  //sort Search 
+  //cart data
+
+  const addToCart = async (itemId,size)=>{
+
+    if (!sizes) {
+      toast.error("select Product  size")
+      return;
+    }
+
+    let cartData =structuredClone(cartItem);
+
+    if (cartData[itemId]) {
+      if (cartData[itemId][sizes]) {
+        cartData[itemId][sizes]+=1;
+        toast.success("Item Added")
+      } else {
+        cartData[itemId][sizes]=1;
+        
+      }
+    } else {
+      cartData[itemId] ={};
+      cartData[itemId][sizes]=1;
+      toast.success("item added")
+    }
+    setCartItems(cartData)
+  }
+
+    //get count
+    const getCartCount = () => {
+      let totalCount = 0;
+  
+     for (const items in cartItem) {
+        for (const item in cartItem[items]) {
+           try {
+              if (cartItem[items][item]>0) {
+                totalCount += cartItem[items][item];
+              }
+           } catch (error) {
+             console.log(error);
+             
+           }
+          
+        }
+      
+     }
+  
+      return totalCount;
+  };
   
   
 
- 
+
+  //updateQuantity
+  const updateQuantity = (itemId, sizes, quantity) => {
+     let cartData = structuredClone(cartItem);
+     cartData[itemId][sizes] = quantity;
+
+     setCartItems(cartData)
+};
+
+
+  useEffect(()=>{
+    console.log(cartItem);
+    
+  },[cartItem])
+
+ //get cart amount 
+ const getCartAmount =  ()=>{
+    let totalAmount = 0;
+    for(const items in cartItem){
+       let itemInfo = products.find((product)=>product._id === items);
+       for(const item in cartItem[items]){
+          try {
+            if (cartItem[items][item]) {
+              totalAmount +=itemInfo.price *cartItem[items][item];
+            }
+          } catch (error) {
+            
+          }
+       }
+    }
+    return totalAmount;
+ }
 
   
   const delivery_fee =10;   
@@ -86,11 +168,13 @@ const StoreContextProvider = (props) => {
         toggleSubCategory,
         subCategory,setSubCategory,
         applyFilter,setFilterProducts,
-        filterProducts,
-      sortProducts,
-        setSortType,
+        filterProducts,cartItem,setCartItems,
+      sortProducts,addToCart,
+        setSortType,productData,setProductData,
         sortType,search,setSearch,
-        visible,setVisible
+        visible,setVisible,sizes,setSizes,
+        getCartCount,cartData,setCartData,
+        updateQuantity,getCartAmount
         
     }
   

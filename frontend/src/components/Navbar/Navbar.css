@@ -51,7 +51,7 @@
 }
 
 .cart{
-    color: white;
+    color: rgb(4, 4, 4);
     text-align: center;
     
 }
@@ -76,6 +76,9 @@
     border: 1px solid #20639B;
     outline: 2px solid white;
     list-style: none;
+}
+.dot p{
+    color: #fff2ef;
 }
 
 .navbar-profile-dropdown li{
@@ -180,6 +183,8 @@
         display: none;
     }
     .navbar-sidebar{
+        position: relative;
+        
         width: 8px;
         height: 8px;
         display: block;
@@ -204,6 +209,8 @@
 
     .navbar-menu.active{
         display: flex;
+        position: fixed;
+        z-index: 1;
     
     }
     .navbar-menu hr{

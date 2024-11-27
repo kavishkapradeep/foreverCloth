@@ -10,6 +10,10 @@ import About from './pages/About/About'
 import MyOrders from './pages/MyOrders/MyOrders'
 import SignInSignUp from './components/SignINSignUp/SignInSignUp'
 import Product from './pages/Product/Product'
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css'; 
+import Cart from './pages/Cart/Cart'
+import Checkout from './pages/Checkout/Checkout'
 
 function App() {
   
@@ -19,6 +23,7 @@ function App() {
     <>
     {showLogin?<SignInSignUp setShowLogin={setShowLogin}/>:<></>}
     <div className="app">
+      <ToastContainer/>
        <Navbar setShowLogin={setShowLogin}/>
        <Routes>
           <Route path='/' element={<Home/>}></Route>
@@ -27,7 +32,8 @@ function App() {
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/myorders' element={<MyOrders/>} />
           <Route path='/product/:productId' element={<Product/>}/>
-          
+          <Route path='/cart' element={<Cart/>}></Route>
+          <Route path='/checkout' element={<Checkout/>}/>
        </Routes>
     </div>
     <Footer/>
