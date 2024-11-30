@@ -69,3 +69,11 @@
     font-weight: 500;
     cursor: pointer;
 }
+
+.title-bar{
+    display: flex;
+    justify-content: space-between;
+}
+.cross-icon{
+    cursor: pointer;
+}

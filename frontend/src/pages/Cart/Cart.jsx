@@ -8,7 +8,7 @@ import React, { useContext, useEffect } from 'react'
 
 const Cart = () => {
  const navigate = useNavigate();
-  const {cartItem,products,cartData,setCartData,sizes,updateQuantity} =useContext(StoreContext)
+  const {cartItem,url,products,cartData,setCartData,sizes,updateQuantity} =useContext(StoreContext)
 
   useEffect(()=>{
     const tempData =[];
@@ -46,7 +46,7 @@ const Cart = () => {
                 return(
                   <div>
                     <div className="cart-items-item">
-                        <img src={productData.image[0]} alt="" srcset="" />
+                        <img src={url+"/images/"+productData.image} alt="" srcset="" />
                         <div className="product-name">
                         <p>{productData.name}</p>
                           <div className='product details'>

@@ -22,6 +22,8 @@ const StoreContextProvider = (props) => {
     const url ="http://localhost:4000"
     const [products,setProducts]=useState([]);
 
+    const [token,setToken] =useState("");
+
   const toggleCategory=(e)=>{
     if (category.includes(e.target.value)) {
         setCategory(prev=>prev.filter(item=>item !==e.target.value))
@@ -85,22 +87,16 @@ const StoreContextProvider = (props) => {
       return;
     }
 
-    let cartData =structuredClone(cartItem);
-
-    if (cartData[itemId]) {
-      if (cartData[itemId][sizes]) {
-        cartData[itemId][sizes]+=1;
-        toast.success("Item Added")
-      } else {
-        cartData[itemId][sizes]=1;
-        
-      }
-    } else {
-      cartData[itemId] ={};
-      cartData[itemId][sizes]=1;
-      toast.success("item added")
+    if (!cartItem[itemId]) {
+        setCartItems((prev)=>({...prev,[itemId]:1}))
+    }else{
+      setCartItems((prev)=>({...prev,[itemId]:prev[itemId]+1}))
     }
-    setCartItems(cartData)
+    if (token) {
+      await axios.post(url+"/api/cart/add",{itemId},{headers:{token}})
+    }
+    
+    
   }
 
     //get count
@@ -160,6 +156,11 @@ const StoreContextProvider = (props) => {
     return totalAmount;
  }
 
+ 
+
+ const loadCartData =async (token) =>{
+  const response =await axios.post(url+"/api/cart/get",{},{headers:{token}})
+ }
 
  const fetchClothList = async ()=>{
   const response = await axios.get(url+"/api/cloth/list");
@@ -169,6 +170,10 @@ const StoreContextProvider = (props) => {
  useEffect(()=>{
       async function loadData() {
         await fetchClothList()
+        if (localStorage.getItem("token")) {
+          setToken(localStorage.getItem("token"));
+          await loadCartData(localStorage.getItem("token"))
+        }
       }
       loadData();
  },[])
@@ -189,7 +194,8 @@ const StoreContextProvider = (props) => {
         sortType,search,setSearch,
         visible,setVisible,sizes,setSizes,
         getCartCount,cartData,setCartData,
-        updateQuantity,getCartAmount,url
+        updateQuantity,getCartAmount,url,
+        token,setToken
         
     }
   

@@ -4,6 +4,7 @@ import { connectDB } from "./config/db.js";
 import clothRouter from "./routes/clothRoute.js";
 import userRouter from "./routes/userRoute.js";
 import 'dotenv/config.js'
+import cartRouter from "./routes/cartRoute.js";
 //app config
 const app = express()
 const port=4000;
@@ -20,6 +21,7 @@ connectDB();
 app.use("/api/cloth",clothRouter)
 app.use('/images',express.static('upload'))
 app.use("/api/user",userRouter)
+app.use("/api/cart",cartRouter)
 
 app.get("/",(req,res)=>{
     res.send("APi Working")
