@@ -6,7 +6,7 @@ import RelatedProduct from '../RelatedProduct/RelatedProduct'
 import Description from '../Description/Description'
 
 const ProductDisplay = () => {
-  const {products,sizes,setSizes,productData,setProductData,cartItem,setCartItems,addToCart} = useContext(StoreContext)
+  const {products,sizes,setSizes,productData,setProductData,url,cartItem,setCartItems,addToCart} = useContext(StoreContext)
     const {productId} =useParams();
     
     const [image,setImage]=useState('')
@@ -17,7 +17,7 @@ const ProductDisplay = () => {
         products.map((item)=>{
           if (item._id===productId) {
             setProductData(item)
-            setImage(item.image[0])
+            setImage(item.image)
             
             return null;
             
@@ -29,18 +29,12 @@ const ProductDisplay = () => {
       fetchProductData();
     },[productId,products])
   return productData? (
-    <div>
+    <div className='container'>
       <div className="productdata">
           <div className="product-image">
-              <div className="image-container">
-                {
-                  productData.image.map((item,i)=>(
-                    <img onClick={()=>setImage(item)} src={item}  key={i} alt="" />
-                  ))
-                }
-              </div>
+              
               <div className="main-image">
-                 <img src={image} alt="" />
+                 <img src={url+"/images/"+image} alt="" />
               </div>
           </div>
           <div className="product-details">

@@ -7,7 +7,8 @@ const clothSchema = new mongoose.Schema({
     image:{type:String,required:true},
     category:{type:String,required:true},
     subCategory:{type:String,required:true},
-    sizes:{type:String,required:true}
+    sizes:{type:[String],required:true},
+    date:{type:Number,required:true}
 })
 
 const clothModel = mongoose.models.cloth || mongoose.model("cloth",clothSchema)

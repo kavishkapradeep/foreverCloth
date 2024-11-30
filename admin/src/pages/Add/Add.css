@@ -68,12 +68,21 @@
 }
 .add-sizes {
     display: flex;
-    justify-content: center;
-    margin: 20px;
-    padding: 10px;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    gap: 10px;
+    font-size: 16px;
+
 }
 .add-sizes p{
     margin-right: 10px;
+}
+.add-sizes select{
+    gap: 30px;
+    margin-left: auto;
 }
 .add-btn{
     width: 80%;
@@ -88,6 +97,7 @@
     color: #f7f7f7;
     border-radius: 4px;
     border: none;
+    cursor: pointer;
 }
 
 @media (max-width:750px) {
@@ -100,6 +110,10 @@
         width: 50%;
     }
     .add-details{
+        display: flex;
+        flex-direction: column;
+    }
+    .add-sizes{
         display: flex;
         flex-direction: column;
     }

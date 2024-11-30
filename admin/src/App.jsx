@@ -10,7 +10,7 @@ import Orders from './pages/Orders/Orders'
 
 function App() {
   
-
+const url ="http://localhost:4000"
   return (
     <div>
       <Navbar/>
@@ -18,9 +18,9 @@ function App() {
       <div className="app-content">
         <ToastContainer/>
         <Routes>
-              <Route path='/add' element={<Add/>}></Route>
-              <Route path='/list' element={<List/>}/>
-              <Route path='/orders' element={<Orders/>}/>
+              <Route path='/add' element={<Add url={url}/>}></Route>
+              <Route path='/list' element={<List url={url}/>}/>
+              <Route path='/orders' element={<Orders url={url}/>}/>
         </Routes>
         
       </div>

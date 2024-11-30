@@ -8,6 +8,15 @@ import fs from 'fs'
 const addCloth = async (req,res)=>{
     let image_filename =`${req.file.filename}`;
 
+    let sizes = [];
+    let dates = Date.now();
+    if (typeof req.body.sizes === "string") {
+        sizes = req.body.sizes.split(',').map(size => size.trim());
+    } 
+    // Check if sizes are passed as an array
+    else if (Array.isArray(req.body.sizes)) {
+        sizes = req.body.sizes.map(size => size.trim());
+    }
     const cloth = new clothModel({
         name:req.body.name,
         description:req.body.description,
@@ -15,12 +24,13 @@ const addCloth = async (req,res)=>{
         category:req.body.category,
         subCategory:req.body.subCategory,
         image:image_filename,
-        sizes:req.body.sizes
+        sizes:sizes,
+        date:dates
     })
 
     try {
         await cloth.save();
-        res.json({sucess:true,message:"Cloth Added"})
+        res.json({success:true,message:"Cloth Added"})
     } catch (error) {
         console.log(error);
         res.json({sucess:false,message:"Error"})
@@ -58,6 +68,7 @@ const removeCloth = async (req,res)=>{
 
 const updateCloth = async (req,res)=>{
     
+
     const {id,name,description,category,subCategory,sizes,price}=req.body;
     let  image_filename;
 
@@ -66,13 +77,21 @@ const updateCloth = async (req,res)=>{
     }
 
     try {
+
+        //Find the existing clothing item
+        const cloth = await clothModel.findById(id);
+        if (!cloth) {
+            return res.json({success:false,message:"Clothing item not found"})
+        }
+        
+
         const updateCloth = await clothModel.findByIdAndUpdate(
             id,{
                 name,
                 description,
                 category,
                 subCategory,
-                sizes,price,
+                sizes,price,dates,
                 ...(image_filename && {image:image_filename}),
             },
             {new:true}
@@ -81,7 +100,10 @@ const updateCloth = async (req,res)=>{
         if (!updateCloth) {
             return res.json({success:false,message:"Clothe items not found"})
         }
-
+        if (image_filename &&cloth.image) {
+            fs.unlink(`upload/${cloth.image}`,()=>{})
+        }
+            
         res.json({success:true,message:"Cloth Updated",data:updateCloth})
     } catch (error) {
         console.log(error);

@@ -3,7 +3,7 @@ import Item from "../Item/Item";
 import "./AllCollection.css";
 import React, { useContext, useEffect, useState } from "react";
 
-const AllCollection = () => {
+const AllCollection = ({url}) => {
 
     
     const {filterProducts,applyFilter,category,subCategory,search,sortProducts,setSortType,sortType,visible,setVisible} =useContext(StoreContext)

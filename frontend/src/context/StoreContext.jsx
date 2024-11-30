@@ -1,7 +1,7 @@
 import  { createContext, useEffect, useState } from 'react'
-import { products } from '../assets/assets.js'
+//import { products } from '../assets/assets.js'
 import { toast } from 'react-toastify'
-
+import axios from "axios"
 
 export const StoreContext = createContext(null)
 
@@ -19,6 +19,8 @@ const StoreContextProvider = (props) => {
     const [productData,setProductData]= useState(false)
     const [cartItem,setCartItems]= useState({});
     const [cartData,setCartData] =useState([]);
+    const url ="http://localhost:4000"
+    const [products,setProducts]=useState([]);
 
   const toggleCategory=(e)=>{
     if (category.includes(e.target.value)) {
@@ -158,12 +160,25 @@ const StoreContextProvider = (props) => {
     return totalAmount;
  }
 
+
+ const fetchClothList = async ()=>{
+  const response = await axios.get(url+"/api/cloth/list");
+  setProducts(response.data.data)
+ }
+
+ useEffect(()=>{
+      async function loadData() {
+        await fetchClothList()
+      }
+      loadData();
+ },[])
+
   
   const delivery_fee =10;   
     
 
     const contextValue ={
-        products,delivery_fee,
+        delivery_fee,products,
         category,setCategory,toggleCategory,
         toggleSubCategory,
         subCategory,setSubCategory,
@@ -174,7 +189,7 @@ const StoreContextProvider = (props) => {
         sortType,search,setSearch,
         visible,setVisible,sizes,setSizes,
         getCartCount,cartData,setCartData,
-        updateQuantity,getCartAmount
+        updateQuantity,getCartAmount,url
         
     }
   

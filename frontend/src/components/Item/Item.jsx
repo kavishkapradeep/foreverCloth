@@ -1,20 +1,25 @@
 import './Item.css'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-const Item = (props) => {
+import { StoreContext } from '../../context/StoreContext'
+const Item = ({id,name,price,description,category,subCategory,sizes,date,image}) => {
+ 
+ 
+  const {url} = useContext(StoreContext);
+
   return (
     <div className='item'>
 
-      <Link to={`/product/${props.id}`}><img src={props.image[0]} alt="" /></Link>
+      <Link to={`/product/${id}`}><img src={url+"/images/"+image} alt="" /></Link>
         
-        <p>{props.name}</p>
-        <p>{props.description}</p>
-        <p>${props.price}</p>
-        <p>{props.category}</p>
-        <p>{props.subCategory}</p>
-        <p>{props.sizes}</p>
-        <p>{props.date}</p>
-        <p>{props.bestSeller}</p>
+        <p>{name}</p>
+        <p>{description}</p>
+        <p>${price}</p>
+        <p>{category}</p>
+        <p>{subCategory}</p>
+        <p>{sizes}</p>
+        <p>{date}</p>
+        
     </div>
   )
 }

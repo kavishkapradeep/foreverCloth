@@ -3,7 +3,6 @@ import { addCloth, listCloth, removeCloth, updateCloth } from "../controllers/cl
 import multer from "multer"
 
 
-
 const clothRouter= express.Router();
 
 //image storage 
