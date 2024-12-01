@@ -64,6 +64,10 @@ const removeCloth = async (req,res)=>{
         
    } 
 }
+//single product info
+const singleCloth = async (req,res)=>{
+
+}
 //update colth 
 
 const updateCloth = async (req,res)=>{
@@ -113,4 +117,4 @@ const updateCloth = async (req,res)=>{
 }
 
 
-export {addCloth,listCloth,removeCloth,updateCloth}
+export {addCloth,listCloth,removeCloth,updateCloth,singleCloth}

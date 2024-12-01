@@ -4,10 +4,10 @@ import userModel from '../models/userModule.js'
 //placing user order for frontend
 
 const placeOrder = async (req,res)=>{
-    const frontend_url="http://localhost:5173"
+    const frontend_url="http://localhost:5174"
 
     try {
-        const newOrder = newOrderModel({
+        const newOrder = new OrderModel({
             userId:req.body.userId,
             items:req.body.items,
             amount:req.body.amount,

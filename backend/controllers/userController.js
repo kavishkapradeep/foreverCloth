@@ -3,23 +3,31 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import validator from "validator"
 
+const createToken =(id)=>{
+    return jwt.sign({id},process.env.JWT_SECRET)
+}
+
+
 //login user
 
 const loginUser =async (req,res)=>{
-    const {email,password}= req.body;
-
+    
     try {
+        const {email,password}= req.body;
+
         const user =await userModel.findOne({email});
         if(!user){
             return res.json({success:false,message:"User Doesn't find"})
         }
         const isMatch = await bcrypt.compare(password,user.password);
 
-        if (!isMatch) {
-            return res.json({success:false,message:"Invalid password"})
+        if (isMatch) {
+            const token =createToken(user._id);
+        res.json({success:true,token})    
+        }else{
+            res.json({success:false,message:"Invalid crdentials"})
         }
-        const token =createToken(user._id);
-        res.json({success:true,token})
+        
     } catch (error) {
         console.log(error);
         
@@ -27,45 +35,51 @@ const loginUser =async (req,res)=>{
     }
 }
 
-const createToken =(id)=>{
-    return jwt.sign({id},process.env.JWT_SECRET)
-}
 
 //register user
 
 const registerUser = async (req,res)=>{
-    const {name,email,password}= req.body;
-    try {
-        //checking is user already exist
-        const exists = await userModel.findOne({email});
-        if (exists) {
-            return res.json({success:false,message:"User Already Exist"})
-        }
-        //validtaing email
-        if (!validator.isEmail(email)) {
-            return res.json({success:false,message:"Enter valid email address"})
-        }
-        //password digit check
-        if(password.length<8){
-            return res.json({success:false,message:"Enter a strong Password"})
-        }
-        //hash user password
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password,salt);
+        try {
+            const {name,email,password} =req.body;
 
-        const newUser = new userModel({
-            name:name,
-            email:email,
-            password:hashedPassword
-        })
+            //checking user already exists or not
+            const exists = await userModel.findOne({email});
+            if(exists){
+                return res.json({success:false,message:"User already exists"})
+            }
+            //validating email format & strong password
+            if (!validator.isEmail(email)) {
+                return res.json({success:false,message:"Please enter a valid email"})
+            }
+            if (password.length<8) {
+                return res.json({success:false,message:"Please enter a strong password"})
+            }
 
-        const user = await newUser.save()
-        const token = createToken(user._id)
-        res.json({sucess:true,token})
-    } catch (error) {
-        console.log(error);
-        res.json({success:false,message:"error"})
-        
-    }
+            //hashing user password 
+            const salt=await bcrypt.genSalt(10)
+            const hashedPassword = await bcrypt.hash(password,salt)
+
+            const newUser = new userModel({
+                name,
+                email,
+                password:hashedPassword
+            })
+
+            const user = await newUser.save()
+
+            const token = createToken(user._id)
+            res.json({success:true,token})
+
+
+        } catch (error) {
+            console.log(error);
+            res.json({success:false,message:error.message})
+            
+        }
 }
-export {loginUser,registerUser}
+
+//Route for admin login
+const adminLogin =async(req,res)=>{
+    res.json({success:true,message:"Login api working"})
+}
+export {loginUser,registerUser,adminLogin}

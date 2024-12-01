@@ -43,7 +43,7 @@ const Cart = () => {
                                           
                         <input onChange={(e)=>e.target.value === '' ||e.target.value ==='0'?null:updateQuantity(item._id,item.size,Number(e.target.value))}
                          className='input-quantity' type="number" defaultValue={cartItem[item._id]} />
-                        <img onClick={()=>removeFromCart(item._id)} className='bin' src={assets.bin_icon} alt="" />
+                        <img onClick={()=>removeFromCart(item._id,item.size,0)} className='bin' src={assets.bin_icon} alt="" />
                         
                     </div>
                     <hr  className='bar'/>

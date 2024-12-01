@@ -6,6 +6,7 @@ import userRouter from "./routes/userRoute.js";
 import 'dotenv/config.js'
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js"
+import connectCloudinary from "./config/cloudinary.js";
 //app config
 const app = express()
 const port=4000;
@@ -17,7 +18,7 @@ app.use(cors())
 
 //db Connected
 connectDB();
-
+connectCloudinary();
 //api endpoints
 app.use("/api/cloth",clothRouter)
 app.use('/images',express.static('upload'))
