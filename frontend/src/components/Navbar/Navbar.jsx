@@ -11,7 +11,7 @@ const Navbar = ({setShowLogin}) => {
     //sidebar setup
     const [isOpen,setIsOpen] = useState(false);
     const [isSOpen,setIsSOpen] =useState(false)
-    const {search,setSearch,visible,setVisible,getCartCount} =useContext(StoreContext);
+    const {search,setSearch,getCartAmount,setVisible,getCartCount,token,setToken} =useContext(StoreContext);
     const loaction =useLocation();
 
     useEffect(()=>{
@@ -22,6 +22,12 @@ const Navbar = ({setShowLogin}) => {
         }
         
     },[loaction])
+
+    const logout =()=>{
+        localStorage.removeItem("token");
+        setToken("");
+        navigate("/")
+    }
     
 
   return (
@@ -40,17 +46,19 @@ const Navbar = ({setShowLogin}) => {
         <div className="navbar-right">
             
             <img onClick={()=>setIsSOpen(!isSOpen)} src={assets.search_icon} alt="" />
-            <div className="navbar-profile">
+            {!token?<button onClick={()=>{setShowLogin(true)}}>Sign In</button>
+            :<div className="navbar-profile">   
                 <Link onClick={()=>{setShowLogin(true)}}><img src={assets.profile_icon} alt="" /></Link>
                 <ul className="navbar-profile-dropdown">
                     <li onClick={()=>navigate('/myorders')}><p>Orders</p></li>
                     <hr />
-                    <li ><p>LogOut</p></li>
+                    <li onClick={logout} ><p>LogOut</p></li>
                 </ul>
             </div>
+            }
             <div className="navbar-search-icon">
                 <Link to='/cart'><img src={assets.cart_icon} alt="" /></Link>
-                <div className="dot"><p className='cart' >{getCartCount()}</p></div>
+                <div className={"dot"}><p className='cart' >{getCartCount()}</p></div>
             </div>
             <div className="navbar-sidebar">
                 <img src={assets.menu_icon} alt="" onClick={()=>setIsOpen(!isOpen)}/>

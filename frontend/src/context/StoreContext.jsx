@@ -17,10 +17,11 @@ const StoreContextProvider = (props) => {
     const [visible,setVisible] =useState(false)
     const [sizes,setSizes]=useState('')
     const [productData,setProductData]= useState(false)
-    const [cartItem,setCartItems]= useState({});
+    const [cartItem,setCartItems]= useState([]);
     const [cartData,setCartData] =useState([]);
     const url ="http://localhost:4000"
     const [products,setProducts]=useState([]);
+    const [food_list,setFoodList] =useState([])
 
     const [token,setToken] =useState("");
 
@@ -80,7 +81,7 @@ const StoreContextProvider = (props) => {
 
   //cart data
 
-  const addToCart = async (itemId,size)=>{
+  const addToCart = async (itemId)=>{
 
     if (!sizes) {
       toast.error("select Product  size")
@@ -102,30 +103,23 @@ const StoreContextProvider = (props) => {
     //get count
     const getCartCount = () => {
       let totalCount = 0;
-  
-     for (const items in cartItem) {
-        for (const item in cartItem[items]) {
-           try {
-              if (cartItem[items][item]>0) {
-                totalCount += cartItem[items][item];
-              }
-           } catch (error) {
-             console.log(error);
-             
-           }
-          
+        for(const itemId in cartItem){
+            if (cartItem[itemId]>0) {
+              totalCount+=cartItem[itemId]
+            }
         }
-      
+     
+      return totalCount;
      }
   
-      return totalCount;
-  };
+      
+  
   
   
 
 
   //updateQuantity
-  const updateQuantity = (itemId, sizes, quantity) => {
+  const updateQuantity = (itemId, quantity) => {
      let cartData = structuredClone(cartItem);
      cartData[itemId][sizes] = quantity;
 
@@ -133,34 +127,33 @@ const StoreContextProvider = (props) => {
 };
 
 
-  useEffect(()=>{
-    console.log(cartItem);
-    
-  },[cartItem])
+  
 
  //get cart amount 
  const getCartAmount =  ()=>{
     let totalAmount = 0;
     for(const items in cartItem){
-       let itemInfo = products.find((product)=>product._id === items);
-       for(const item in cartItem[items]){
-          try {
-            if (cartItem[items][item]) {
-              totalAmount +=itemInfo.price *cartItem[items][item];
-            }
-          } catch (error) {
-            
-          }
+        if (cartItem[items]>0) {
+          let itemInfo= products.find((product)=>product._id===items)
+          totalAmount+=itemInfo.price*cartItem[items]
+        }
        }
+       return totalAmount;
     }
-    return totalAmount;
- }
+    
+  
 
- 
+ const removeFromCart =async(itemId)=>{
+  setCartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}));
+   if (token) {
+      await axios.post(url+'/api/cart/remove',{itemId},{headers:{token}})
+   }
+ }
 
  const loadCartData =async (token) =>{
   const response =await axios.post(url+"/api/cart/get",{},{headers:{token}})
- }
+  setCartItems(response.data.cartData);
+}
 
  const fetchClothList = async ()=>{
   const response = await axios.get(url+"/api/cloth/list");
@@ -195,7 +188,8 @@ const StoreContextProvider = (props) => {
         visible,setVisible,sizes,setSizes,
         getCartCount,cartData,setCartData,
         updateQuantity,getCartAmount,url,
-        token,setToken
+        token,setToken,
+        removeFromCart,
         
     }
   
@@ -204,6 +198,6 @@ const StoreContextProvider = (props) => {
         {props.children}
     </StoreContext.Provider>
         )
-}
 
+ }
 export default StoreContextProvider

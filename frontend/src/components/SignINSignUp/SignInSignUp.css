@@ -77,3 +77,7 @@
 .cross-icon{
     cursor: pointer;
 }
+.login{
+    display: flex;
+    justify-content: space-between;
+}

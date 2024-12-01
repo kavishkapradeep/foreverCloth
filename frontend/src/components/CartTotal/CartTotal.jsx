@@ -6,6 +6,7 @@ import React, { useContext } from 'react'
 const CartTotal = () => {
 
     const {getCartAmount} = useContext(StoreContext);
+    
 
   return (
     <div className='cartData'>

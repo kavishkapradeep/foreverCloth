@@ -2,6 +2,7 @@ import './SignInSignUp.css'
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
 import { StoreContext } from '../../context/StoreContext'
+import { assets } from '../../assets/assets'
 const SignInSignUp = ({setShowLogin}) => {
    const {url,token,setToken} =useContext(StoreContext)
    const [data,setData] =useState({
@@ -9,7 +10,7 @@ const SignInSignUp = ({setShowLogin}) => {
       email:"",
       password:""
    })
-    const [currState,setCurrState]=useState("Sign IN")
+    const [currState,setCurrState]=useState("Sign In")
 
 
     const onChangeHandler =(event)=>{
@@ -21,7 +22,7 @@ const SignInSignUp = ({setShowLogin}) => {
     const onLogin = async (event)=>{
       event.preventDefault();
       let newUrl=url;
-      if (currState==="Sign IN") {
+      if (currState==="Sign In") {
          newUrl+='/api/user/login'
       }
       else{
@@ -42,10 +43,13 @@ const SignInSignUp = ({setShowLogin}) => {
   return (
     <div className='logIn'>
 
-         <form onClick={()=>{setShowLogin(true)}} className="login-container">
+         <form onSubmit={onLogin} className="login-container">
+            <div className="login">
              <div className="login-title">
                     <h2>{currState}</h2>
                     <p className="login-title-bar"></p>
+             </div>
+             <img onClick={()=>{setShowLogin(false)}} src={assets.cross_icon} alt="" srcset="" />
              </div>
              <div className="login-inputs">
                 {currState==="Sign In"?<></>:<input name='name'onChange={onChangeHandler} value={data.name} type="text"  placeholder='Your Name'required/>}
