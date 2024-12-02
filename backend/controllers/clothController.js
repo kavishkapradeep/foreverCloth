@@ -1,41 +1,52 @@
 import clothModel from "../models/clothModule.js";
 import fs from 'fs'
+import {v2 as cloudinary} from "cloudinary"
+import { error } from "console";
 
 
 
 //add cloth item
 
 const addCloth = async (req,res)=>{
-    let image_filename =`${req.file.filename}`;
-
-    let sizes = [];
-    let dates = Date.now();
-    if (typeof req.body.sizes === "string") {
-        sizes = req.body.sizes.split(',').map(size => size.trim());
-    } 
-    // Check if sizes are passed as an array
-    else if (Array.isArray(req.body.sizes)) {
-        sizes = req.body.sizes.map(size => size.trim());
-    }
-    const cloth = new clothModel({
-        name:req.body.name,
-        description:req.body.description,
-        price:req.body.price,
-        category:req.body.category,
-        subCategory:req.body.subCategory,
-        image:image_filename,
-        sizes:sizes,
-        date:dates
-    })
+    //let image_filename =`${req.file.filename}`;
 
     try {
-        await cloth.save();
-        res.json({success:true,message:"Cloth Added"})
+        const {name,description,price,category,subCategory,sizes}=req.body;
+        const image1 = req.files.image1 && req.files.image1[0]
+        const image2 = req.files.image2 && req.files.image2[0]
+        const image3 = req.files.image3 && req.files.image3[0]
+        const image4 = req.files.image4 && req.files.image4[0]
+
+        const images =[image1,image2,image3,image4].filter((item)=> item !==undefined)
+        
+        let imageUrl = await Promise.all(
+            images.map(async (item)=>{
+               let result =await cloudinary.uploader.upload(item.path,{resource_type:'image'});
+               return result.secure_url
+            })
+        )
+
+        const clothData ={
+            name,
+            description,
+            category,
+            price:Number(price),
+            subCategory,
+            sizes:JSON.parse(sizes),
+            image:imageUrl,
+            date:Date.now()
+        }
+        const cloth = new  clothModel(clothData);
+        await cloth.save()
+                
+        res.json({success:true,message:"Data added"})
+    
     } catch (error) {
         console.log(error);
-        res.json({sucess:false,message:"Error"})
+        res.json({success:false,message:error.message})
         
     }
+   
 
 }
 
@@ -43,7 +54,7 @@ const addCloth = async (req,res)=>{
 const listCloth =async(req,res)=>{
     try {
         const cloths = await clothModel.find({});
-        res.json({success:true,data:cloths})
+        res.json({success:true,cloths})
     } catch (error) {
         console.log(error);
         res.json({success:false,message:"Error"})
@@ -53,11 +64,10 @@ const listCloth =async(req,res)=>{
 //remove  cloth item 
 const removeCloth = async (req,res)=>{
    try {
-        const cloth = await clothModel.findById(req.body.id)
-        fs.unlink(`upload/${cloth.image}`,()=>{})
+        
 
         await clothModel.findByIdAndDelete(req.body.id);
-        res.json({success:true,message:"Food Removed"})
+        res.json({success:true,message:"Cloth Removed"})
    } catch (error) {
         console.log(error);
         res.json({success:false,message:"Error"})
@@ -66,7 +76,14 @@ const removeCloth = async (req,res)=>{
 }
 //single product info
 const singleCloth = async (req,res)=>{
-
+    try {
+        const {clothId} = req.body
+        const cloth = await clothModel.findById(clothId)
+        res.json({success:true,cloth})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false,message:error.message})
+    }
 }
 //update colth 
 
