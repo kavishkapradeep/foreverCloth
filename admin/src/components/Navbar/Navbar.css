@@ -32,6 +32,14 @@
     width: 30px;
     color: black;
 }
+.logout{
+    width: 80px;
+    padding: 4px;
+    color: antiquewhite;
+    background-color: black;
+    border: none;
+    border-radius: 4px;
+}
 
 @media (max-width:750px) {
     .logo{

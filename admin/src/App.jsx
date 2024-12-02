@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Navbar from './components/Navbar/Navbar'
 import {ToastContainer} from 'react-toastify'
@@ -9,22 +9,32 @@ import List from './pages/List/List'
 import Orders from './pages/Orders/Orders'
 import Login from './components/login/Login';
 
+
+
+export const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 function App() {
   
-const url ="http://localhost:4000"
-const [token,setToken] =useState(``);
+
+
+const [token,setToken] =useState(localStorage.getItem('token')?localStorage.getItem('token'):``);
+
+useEffect(()=>{
+  localStorage.setItem('token',token)
+},[token])
   return (
-    <div>{token === ""?
-      <Login/>:<>
+    <div><ToastContainer/>
+      {token === ""?
+      <Login setToken={setToken}/>:<>
       
-      <Navbar/>
+      <Navbar setToken={setToken}/>
       <hr />
       <div className="app-content">
-        <ToastContainer/>
+        
         <Routes>
-              <Route path='/add' element={<Add url={url}/>}></Route>
-              <Route path='/list' element={<List url={url}/>}/>
-              <Route path='/orders' element={<Orders url={url}/>}/>
+              <Route path='/add' element={<Add  token={token}/>}></Route>
+              <Route path='/list' element={<List token={token}/>}/>
+              <Route path='/orders' element={<Orders  token={token}/>}/>
         </Routes>
         
       </div>

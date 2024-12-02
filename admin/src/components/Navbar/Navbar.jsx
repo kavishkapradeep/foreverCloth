@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 
-const Navbar = () => {
+const Navbar = ({setToken}) => {
 
   
   return (
@@ -32,7 +32,8 @@ const Navbar = () => {
       </div>
       
       
-      <img className='profile' src={assets.profile_icon} alt="" />
+      
+      <button className='logout' onClick={()=>setToken('')}>LOG OUT</button>
     </div>
   )
 }
