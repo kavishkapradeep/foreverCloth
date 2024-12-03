@@ -1,10 +1,12 @@
 import './SignInSignUp.css'
 import axios from 'axios'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StoreContext } from '../../context/StoreContext'
 import { assets } from '../../assets/assets'
+import { useNavigate } from 'react-router-dom'
 const SignInSignUp = ({setShowLogin}) => {
-   const {url,token,setToken} =useContext(StoreContext)
+   const {backendUrl,token,setToken} =useContext(StoreContext)
+   const navigate =useNavigate();
    const [data,setData] =useState({
       name:"",
       email:"",
@@ -21,7 +23,7 @@ const SignInSignUp = ({setShowLogin}) => {
 
     const onLogin = async (event)=>{
       event.preventDefault();
-      let newUrl=url;
+      let newUrl=backendUrl;
       if (currState==="Sign In") {
          newUrl+='/api/user/login'
       }
@@ -31,7 +33,7 @@ const SignInSignUp = ({setShowLogin}) => {
       const response = await axios.post(newUrl,data)
 
       if (response.data.success) {
-         setToken(response.data.success);
+         setToken(response.data.token);
          localStorage.setItem("token",response.data.token)
          setShowLogin(false)
       } else {
@@ -39,6 +41,12 @@ const SignInSignUp = ({setShowLogin}) => {
       }
 
     }
+
+    useEffect(()=>{
+      if (token) {
+         navigate('/')
+      }
+    },[token])
 
   return (
     <div className='logIn'>
@@ -49,7 +57,7 @@ const SignInSignUp = ({setShowLogin}) => {
                     <h2>{currState}</h2>
                     <p className="login-title-bar"></p>
              </div>
-             <img onClick={()=>{setShowLogin(false)}} src={assets.cross_icon} alt="" srcset="" />
+             <img onClick={()=>navigate('/')} className='cursor' src={assets.cross_icon} alt="" srcset="" />
              </div>
              <div className="login-inputs">
                 {currState==="Sign In"?<></>:<input name='name'onChange={onChangeHandler} value={data.name} type="text"  placeholder='Your Name'required/>}

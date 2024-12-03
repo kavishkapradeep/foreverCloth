@@ -17,15 +17,16 @@ import Checkout from './pages/Checkout/Checkout'
 
 function App() {
   
-  const[showLogin,setShowLogin] =useState(false)
+  
 
   return (
     <>
-    {showLogin?<SignInSignUp setShowLogin={setShowLogin}/>:<></>}
+    
     <div className="app">
       <ToastContainer/>
-       <Navbar setShowLogin={setShowLogin}/>
+       <Navbar />
        <Routes>
+        <Route path='/login' element={<SignInSignUp/>}></Route>
           <Route path='/' element={<Home/>}></Route>
           <Route path='/collection' element={<Collection/>}/>
           <Route path='/about' element={<About/>}/>

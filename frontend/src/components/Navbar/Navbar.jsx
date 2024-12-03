@@ -46,9 +46,9 @@ const Navbar = ({setShowLogin}) => {
         <div className="navbar-right">
             
             <img onClick={()=>setIsSOpen(!isSOpen)} src={assets.search_icon} alt="" />
-            {!token?<button className='signin' onClick={()=>{setShowLogin(true)}}>Sign In</button>
+            {!token?<button className='signin' onClick={()=>navigate('/login')}>Sign In</button>
             :<div className="navbar-profile">   
-                <Link onClick={()=>{setShowLogin(true)}}><img src={assets.profile_icon} alt="" /></Link>
+                <Link ><img src={assets.profile_icon} alt="" /></Link>
                 <ul className="navbar-profile-dropdown">
                     <li onClick={()=>navigate('/myorders')}><p>Orders</p></li>
                     <hr />

@@ -203,7 +203,7 @@ const StoreContextProvider = (props) => {
         getCartCount,cartData,setCartData,
         updateQuantity,getCartAmount,
         token,setToken,
-        removeFromCart,
+        removeFromCart,backendUrl
         
     }
   
