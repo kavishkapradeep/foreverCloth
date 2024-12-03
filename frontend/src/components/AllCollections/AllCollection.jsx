@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useState } from "react";
 const AllCollection = ({url}) => {
 
     
-    const {filterProducts,applyFilter,category,subCategory,search,sortProducts,setSortType,sortType,visible,setVisible} =useContext(StoreContext)
+    const {filterProducts,applyFilter,category,subCategory,search,sortProducts,setSortType,sortType,products} =useContext(StoreContext)
     
     
     useEffect(()=>{
@@ -15,7 +15,7 @@ const AllCollection = ({url}) => {
 
     useEffect(()=>{
       applyFilter();
-    },[category,subCategory,search])
+    },[category,subCategory,search,products])
 
     
 

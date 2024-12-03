@@ -2,6 +2,7 @@ import  { createContext, useEffect, useState } from 'react'
 //import { products } from '../assets/assets.js'
 import { toast } from 'react-toastify'
 import axios from "axios"
+import { backendUrl } from '../../../admin/src/App'
 
 export const StoreContext = createContext(null)
 
@@ -19,7 +20,7 @@ const StoreContextProvider = (props) => {
     const [productData,setProductData]= useState(false)
     const [cartItem,setCartItems]= useState([]);
     const [cartData,setCartData] =useState([]);
-    const url ="http://localhost:4000"
+    
     const [products,setProducts]=useState([]);
     const [food_list,setFoodList] =useState([])
 
@@ -141,6 +142,23 @@ const StoreContextProvider = (props) => {
        return totalAmount;
     }
     
+    const fetchClothList = async () =>{
+      try {
+        const response = await axios.get(backendUrl+'/api/cloth/list')
+        
+        if (response.data.success) {
+          setProducts(response.data.cloths)
+
+        } else {
+          toast.error(response.data.message)
+        }
+        
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message)
+        
+      }
+    }
   
 
  const removeFromCart =async(itemId)=>{
@@ -155,10 +173,6 @@ const StoreContextProvider = (props) => {
   setCartItems(response.data.cartData);
 }
 
- const fetchClothList = async ()=>{
-  const response = await axios.get(url+"/api/cloth/list");
-  setProducts(response.data.data)
- }
 
  useEffect(()=>{
       async function loadData() {
@@ -187,7 +201,7 @@ const StoreContextProvider = (props) => {
         sortType,search,setSearch,
         visible,setVisible,sizes,setSizes,
         getCartCount,cartData,setCartData,
-        updateQuantity,getCartAmount,url,
+        updateQuantity,getCartAmount,
         token,setToken,
         removeFromCart,
         

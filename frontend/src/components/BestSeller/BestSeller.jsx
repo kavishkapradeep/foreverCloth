@@ -15,7 +15,7 @@ const BestSeller = () => {
     useEffect(()=>{
       
         setBestSeller(products.slice(0,5));
-    })
+    },[products])
 
   return (
     <div className='bestSeller'>

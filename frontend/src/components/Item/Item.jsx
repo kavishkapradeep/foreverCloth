@@ -10,7 +10,7 @@ const Item = ({id,name,price,description,category,subCategory,sizes,date,image})
   return (
     <div className='item'>
 
-      <Link to={`/product/${id}`}><img src={url+"/images/"+image} alt="" /></Link>
+      <Link to={`/product/${id}`}><img src={image[0]} alt="" /></Link>
         
         <p>{name}</p>
         <p>{description}</p>

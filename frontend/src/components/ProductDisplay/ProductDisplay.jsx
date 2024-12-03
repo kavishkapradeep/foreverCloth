@@ -32,9 +32,14 @@ const ProductDisplay = () => {
     <div className='container'>
       <div className="productdata">
           <div className="product-image">
-              
+              <div className="side-img">
+                <img src={image[0]} alt="" />
+                <img src={image[1]} alt="" />
+                <img src={image[2]} alt="" />
+                <img src={image[3]} alt="" />
+              </div>
               <div className="main-image">
-                 <img src={url+"/images/"+image} alt="" />
+                 <img src={image[0]} alt="" />
               </div>
           </div>
           <div className="product-details">
@@ -48,7 +53,7 @@ const ProductDisplay = () => {
                   ))
                 }
               </div>
-              <p>${productData.price}</p>
+              <p className='price'>${productData.price}</p>
               <button onClick={()=>addToCart(productData._id,sizes)} className="add-to-cart">ADD TO CART</button>
               <div className="product-details-detail">
                   <p>100% Original Product</p>

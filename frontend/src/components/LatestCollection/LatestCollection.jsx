@@ -10,7 +10,7 @@ const LatestCollection = () => {
     //data load file in assests.js
         useEffect(()=>{
             setLatestCollection(products.slice(0,10));
-        })
+        },[products])
  
     
     
