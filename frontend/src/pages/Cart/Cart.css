@@ -98,7 +98,10 @@
     cursor: pointer;
         
 }
-
+.sizes {
+    margin: 4px;
+    
+}
 @media (max-width:950px) {
     .product-name{
         font-size: 12px;

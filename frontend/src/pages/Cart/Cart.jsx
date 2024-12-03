@@ -9,7 +9,7 @@ import React, { useContext, useEffect } from 'react'
 const Cart = () => {
  const navigate = useNavigate();
   const {cartItem,url,products,removeFromCart,updateQuantity} =useContext(StoreContext)
-  
+ 
 
 
   return (
@@ -24,7 +24,7 @@ const Cart = () => {
             
             {
              products.map((item,index)=>{
-              
+              const formattedSizes = item.sizes.join(",");
                 if (cartItem[item._id]>0) {
                   
                 
@@ -36,11 +36,9 @@ const Cart = () => {
                         <p>{item.name}</p>
                           <div className='product details'>
                           <p>${item.price}</p>
-                          <p>{item.size}</p>
-                          </div>
-                        </div>
-                        
-                                          
+                          <p className='sizes'>{formattedSizes}</p>
+                          </div>        
+                           </div>                                          
                         <input onChange={(e)=>e.target.value === '' ||e.target.value ==='0'?null:updateQuantity(item._id,item.size,Number(e.target.value))}
                          className='input-quantity' type="number" defaultValue={cartItem[item._id]} />
                         <img onClick={()=>removeFromCart(item._id,item.size,0)} className='bin' src={assets.bin_icon} alt="" />

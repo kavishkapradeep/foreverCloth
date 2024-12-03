@@ -11,7 +11,7 @@ const Navbar = ({setShowLogin}) => {
     //sidebar setup
     const [isOpen,setIsOpen] = useState(false);
     const [isSOpen,setIsSOpen] =useState(false)
-    const {search,setSearch,getCartAmount,setVisible,getCartCount,token,setToken} =useContext(StoreContext);
+    const {search,setSearch,setCartItems,setVisible,getCartCount,token,setToken} =useContext(StoreContext);
     const loaction =useLocation();
 
     useEffect(()=>{
@@ -26,6 +26,7 @@ const Navbar = ({setShowLogin}) => {
     const logout =()=>{
         localStorage.removeItem("token");
         setToken("");
+        setCartItems({})
         navigate("/")
     }
     
