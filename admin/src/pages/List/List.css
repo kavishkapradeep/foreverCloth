@@ -1,69 +1,47 @@
 .list-container{
+    display: flex;
+    flex-direction: column;
+    
     margin: auto;
+    
+    width: 80%;
 }
 .list-topic-main{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 10px;
-}
-
-#update{
-    width: 25px;
-    height: 25px;
-    
-    
-}
-.list-table-format{
-    display: grid;
-    grid-template-columns: 0.5fr 2fr 0.75fr 0.75fr 1fr 1fr 0.75fr 0.5fr;
-    gap: 15px;
-    margin-top: 10px;
-}
-.list-table-format img{
-    width: 50px;
-    height: 60px;
-}
-.list-topic {
-    display: flex;
-}
-.list-topic p{
     font-size: 22px;
-    color: #7a7a7a;
+    color: #4a4a4a;
+}
+.list-topic{
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
 }
 .list-topic span{
-    color: black;
+    color: #000;
 }
 .bar{
+    margin-left: 10px;
     width: 30px;
     height: 3px;
     background-color: #000;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 10px;
+}
+.list-table-format{
+    display: grid;
+    grid-template-columns: 0.5fr 1.2fr 0.5fr 0.7fr 0.75fr 0.8fr 0.5fr;
+    margin: 6px;
+    padding: 4px;
+    border-bottom: 1px solid #000;
+}
+.list-table-format img{
+    width: 70px;
 }
 .cursor{
     cursor: pointer;
 }
 
-@media (max-width:750px) {
+@media (max-width:800px) {
     .list-table-format{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        font-size: 14px;
-    }
-    .list-table-format img{
-        width: 30px;
-        height: 30px;
-        margin: auto;
-    }
-    .list-table-format b{
-        font-size: 12px;
-    }
-    .list-container{
-        margin: auto;
-    }
-    .list-table-format p{
-        margin: auto;
     }
 }
