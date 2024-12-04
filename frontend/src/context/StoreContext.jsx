@@ -82,36 +82,54 @@ const StoreContextProvider = (props) => {
 
   //cart data
 
-  const addToCart = async (itemId)=>{
+  const addToCart = async (itemId,sizes)=>{
 
     if (!sizes) {
       toast.error("select Product  size")
       return;
     }
-
-    if (!cartItem[itemId]>0) {
-        setCartItems((prev)=>({...prev,[itemId]:1}))
-    }else{
-      setCartItems((prev)=>({...prev,[itemId]:prev[itemId]+1}))
-    }
-    if (token) {
-      await axios.post(url+"/api/cart/add",{itemId},{headers:{token}})
-    }
     
+    let cartData = structuredClone(cartItem);
+    
+    if (cartData[itemId]) {
+      if (cartData[itemId][sizes]) {
+        cartData[itemId][sizes] +=1;
+      } else {
+        cartData[itemId][sizes] = 1;
+      }
+    }else{
+        cartData[itemId] ={};
+        cartData[itemId][sizes] =1;
+    }
+
+    setCartItems(cartData)
+
+    if (token) {
+      await axios.post(backendUrl+"/api/cart/add",{itemId,sizes},{headers:{token}})
+    }
     
   }
+  
 
-    //get count
-    const getCartCount = () => {
-      let totalCount = 0;
-        for(const itemId in cartItem){
-            if (cartItem[itemId]>0) {
-              totalCount+=cartItem[itemId]
-            }
+  const getCartCount = () => {
+    let totalCount = 0;
+  
+    // Loop through each item in cartItem
+    for (const itemId in cartItem) {
+      // Loop through each size for the item
+      for (const size in cartItem[itemId]) {
+        const quantity = cartItem[itemId][size];
+        
+        // Only add to totalCount if quantity is greater than 0
+        if (quantity > 0) {
+          totalCount += quantity;
         }
-     
-      return totalCount;
-     }
+      }
+    }
+  
+    return totalCount;
+  };
+  
   
       
   
@@ -120,27 +138,50 @@ const StoreContextProvider = (props) => {
 
 
   //updateQuantity
-  const updateQuantity = (itemId, quantity) => {
+  const updateQuantity = async (itemId,sizes, quantity) => {
      let cartData = structuredClone(cartItem);
      cartData[itemId][sizes] = quantity;
 
      setCartItems(cartData)
+
+     if (token) {
+      try {
+         await axios.post(backendUrl+"/api/cart/update",{itemId,sizes,quantity},{headers:{token}})
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message)
+      }
+     }
 };
 
 
   
 
  //get cart amount 
- const getCartAmount =  ()=>{
-    let totalAmount = 0;
-    for(const items in cartItem){
-        if (cartItem[items]>0) {
-          let itemInfo= products.find((product)=>product._id===items)
-          totalAmount+=itemInfo.price*cartItem[items]
+ const getCartAmount = () => {
+  let totalAmount = 0;
+
+  // Loop through each item in cartItem
+  for (const itemId in cartItem) {
+    // Find the product corresponding to this itemId
+    const itemInfo = products.find(product => product._id === itemId);
+    
+    if (itemInfo) {
+      // Loop through each size for the item in cartItem
+      for (const sizes in cartItem[itemId]) {
+        const quantity = cartItem[itemId][sizes];
+
+        // Only add to totalAmount if quantity is greater than 0
+        if (quantity > 0) {
+          totalAmount += itemInfo.price * quantity;
         }
-       }
-       return totalAmount;
+      }
     }
+  }
+
+  return totalAmount;
+};
+
     
     const fetchClothList = async () =>{
       try {
@@ -164,26 +205,37 @@ const StoreContextProvider = (props) => {
  const removeFromCart =async(itemId)=>{
   setCartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}));
    if (token) {
-      await axios.post(url+'/api/cart/remove',{itemId},{headers:{token}})
+      await axios.post(backendUrl+'/api/cart/remove',{itemId},{headers:{token}})
    }
  }
 
  const loadCartData =async (token) =>{
-  const response =await axios.post(url+"/api/cart/get",{},{headers:{token}})
-  setCartItems(response.data.cartData);
+  
+  try {
+    const response =await axios.post(backendUrl+"/api/cart/get",{},{headers:{token}})
+    
+    
+    if (response.data.success) {
+      setCartItems(response.data.cartData);
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message)
+  }
 }
+
 
 
  useEffect(()=>{
       async function loadData() {
         await fetchClothList()
-        if (localStorage.getItem("token")) {
+        if (!token && localStorage.getItem("token")) {
           setToken(localStorage.getItem("token"));
           await loadCartData(localStorage.getItem("token"))
         }
       }
       loadData();
- },[])
+ },[token])
 
   
   const delivery_fee =10;   

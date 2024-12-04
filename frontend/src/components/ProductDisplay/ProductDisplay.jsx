@@ -48,7 +48,7 @@ const ProductDisplay = () => {
               <div className="product-size">
                 {
                   productData.sizes.map((item,i)=>(
-                    <button onClick={()=>setSizes(item)}><p key={i}>{item}</p></button>
+                    <button onClick={()=>setSizes(item)}><p className={sizes===item ?"selected":""} key={i}>{item}</p></button>
                      
                   ))
                 }

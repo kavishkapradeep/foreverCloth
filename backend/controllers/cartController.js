@@ -4,20 +4,20 @@ import userModel from '../../backend/models/userModule.js'
 //add items to user cart 
 const addToCart = async (req,res)=>{
     try {
-        const {userId,itemId,size} =req.body
+        const {userId,itemId,sizes} =req.body
 
         const userData = await userModel.findById(userId)
         let cartData =  await userData.cartData;
 
         if (cartData[itemId]) {
-            if (cartData[itemId][size]) {
-                cartData[itemId][size] +=1
+            if (cartData[itemId][sizes]) {
+                cartData[itemId][sizes] +=1
             }else{
-                cartData[itemId][size] =1
+                cartData[itemId][sizes] =1
             }
         }else{
             cartData[itemId] ={}
-            cartData[itemId][size] =1
+            cartData[itemId][sizes] =1
         }
 
         await userModel.findByIdAndUpdate(userId,{cartData})
@@ -31,6 +31,7 @@ const addToCart = async (req,res)=>{
 
 const removeFromCart = async (req,res)=>{
     try {
+        const {userId} =req.body
         let userData = await userModel.findById(req.body.userId);
         let cartData =await userData.cartData;
 
@@ -49,12 +50,12 @@ const removeFromCart = async (req,res)=>{
 //update user cart
 const updateCart = async (req,res)=>{
     try {
-        const {userId,itemId,size,quantity} = req.body
+        const {userId,itemId,sizes,quantity} = req.body
 
         const userData =await userModel.findById(userId)
         let cartData = await userData.cartData;
 
-        cartData[itemId][size] = quantity
+        cartData[itemId][sizes] = quantity
 
         await userModel.findByIdAndUpdate(userId,{cartData})
         res.json({success:true,message:"Cart Updated"})
@@ -68,8 +69,11 @@ const updateCart = async (req,res)=>{
 
 const getcart= async (req,res)=>{
     try {
-        let userData = await userModel.findById(req.body.userId);
-        let cartData= await userData.cartData;
+
+        const {userId} =req.body
+
+        const userData = await userModel.findById(userId);
+        let cartData= await userData.cartData  ;
         res.json({success:true,cartData})
     } catch (error) {
         console.log(error);

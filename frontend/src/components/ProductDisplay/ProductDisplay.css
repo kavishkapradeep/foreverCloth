@@ -67,9 +67,10 @@
     display: flex;
     margin: 10px;
     
+    
 }
 .product-size p{
-    border: 1px solid #000;
+    border: 1px solid rgb(149, 180, 180);
     margin: 10px;
     padding: 10px;
     cursor: pointer;
@@ -77,8 +78,9 @@
 .product-size p:hover{
     background-color: #7a7a7a;
 }
-.product-size p:active{
-    background-color: aqua;
+.product-size p.selected{
+    background-color: rgb(149, 180, 180);
+    scale: 1.05;
 }
 .product-size button{
     border: none;

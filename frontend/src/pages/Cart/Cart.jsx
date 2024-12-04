@@ -8,8 +8,25 @@ import React, { useContext, useEffect } from 'react'
 
 const Cart = () => {
  const navigate = useNavigate();
-  const {cartItem,url,products,removeFromCart,updateQuantity} =useContext(StoreContext)
- 
+  const {cartItem,sizes,cartData,setCartData,products,removeFromCart,updateQuantity} =useContext(StoreContext)
+
+  useEffect(()=>{
+    if (products.length>0) {
+      const tempData= [];
+      for(const items in cartItem){
+        for(const item in cartItem[items]){
+            if (cartItem[items][item]>0) {
+              tempData.push({
+                _id:items,
+                sizes:item,
+                quantity:cartItem[items][item]
+              })
+            }
+        }
+      }
+      setCartData(tempData)
+    }
+  },[cartItem,products])
 
 
   return (
@@ -23,25 +40,25 @@ const Cart = () => {
         <div className="cart-items">
             
             {
-             products.map((item,index)=>{
-              const formattedSizes = item.sizes.join(",");
-                if (cartItem[item._id]>0) {
+             cartData.map((item,index)=>{
+                const cartData = products.find((product)=>product._id === item._id)
+                if (cartItem[item._id]) {
                   
                 
                 return(
                   <div>
                     <div className="cart-items-item">
-                        <img src={item.image[0]} alt="" srcset="" />
+                        <img src={cartData.image[0]} alt=""  />
                         <div className="product-name">
-                        <p>{item.name}</p>
+                        <p>{cartData.name}</p>
                           <div className='product details'>
-                          <p>${item.price}</p>
-                          <p className='sizes'>{formattedSizes}</p>
+                          <p>${cartData.price}</p>
+                          <p className='sizes'>{item.sizes}</p>
                           </div>        
                            </div>                                          
-                        <input onChange={(e)=>e.target.value === '' ||e.target.value ==='0'?null:updateQuantity(item._id,item.size,Number(e.target.value))}
-                         className='input-quantity' type="number" defaultValue={cartItem[item._id]} />
-                        <img onClick={()=>removeFromCart(item._id,item.size,0)} className='bin' src={assets.bin_icon} alt="" />
+                        <input onChange={(e)=>e.target.value === '' ||e.target.value ==='0'?null:updateQuantity(item._id,item.sizes,Number(e.target.value))}
+                         className='input-quantity' type="number" defaultValue={item.quantity} />
+                        <img onClick={()=>updateQuantity(item._id,item.sizes,0)} className='bin' src={assets.bin_icon} alt="" />
                         
                     </div>
                     <hr  className='bar'/>
