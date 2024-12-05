@@ -1,37 +1,80 @@
 import orderModel from "../models/orderModel.js";
 import userModel from '../models/userModule.js'
 
-//placing user order for frontend
+
+
+//placing orders using COD METHOD
 
 const placeOrder = async (req,res)=>{
-    const frontend_url="http://localhost:5174"
+   
 
     try {
-        const newOrder = new OrderModel({
-            userId:req.body.userId,
-            items:req.body.items,
-            amount:req.body.amount,
-            address:req.body.address
-        })
+        const {userId,items,amount,address} =req.body;
 
-        await newOrder.save();
-        await userModel.findByIdAndUpdate(req.body.userId,{cartData:{}});
+        const orderData ={
+            userId,
+            items,
+            amount,
+            address,
+            paymentMethod:"COD",
+            payment:false,
+            
+        }
+        const newOrder = new orderModel(orderData)
+        await newOrder.save()
+
+        await userModel.findByIdAndUpdate(userId,{cartData:{}})
+        res.json({success:true,message:"Order Placed"})
     } catch (error) {
         console.log(error);
         res.json({success:false,message:"Error"})
     }
 }
 
+//placing orders using stripe Method
+
+const placeOrderStripe = async (req,res)=>{
+    
+}
+//placing orders using Razorpay Method
+const placeOrderRazorpay = async (req,res) =>{
+
+}
+
+//all orders data for admin panel
+const allOrders = async (req,res)=>{
+    try {
+        const orders = await orderModel.find({})
+        res.json({success:true,orders})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false,message:"Error"})
+    }
+}
 //user orders for frontend
 
 const userOrders = async (req,res)=>{
     try {
-        const orders = await orderModel.find({userId:req.body.userId});
+        const {userId} =req.body;
+        const orders = await orderModel.find({userId});
         res.json({success:true,data:orders})
     } catch (error) {
         console.log(error);
-        res.json({success:false,message:"Erroe"})
+        res.json({success:false,message:"Error"})
     }
 }
 
-export {placeOrder,userOrders}
+//update order status from Admin pannel
+const updateStatus = async (req,res) =>{
+    try {
+        const {orderId,status} = req.body
+
+        await orderModel.findByIdAndUpdate(orderId,{status})
+
+        res.json({success:true,message:'Status Updated'})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false,message:"Error"})
+    }
+}
+export {placeOrder,userOrders,placeOrderRazorpay,placeOrderStripe,allOrders,updateStatus}

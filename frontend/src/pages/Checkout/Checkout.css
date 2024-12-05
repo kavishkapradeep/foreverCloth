@@ -48,6 +48,43 @@
     border-radius: 4px;
     cursor: pointer;
 }
+
+#input-fields{
+    border: 1px solid #000;
+}
+
+.payment-type{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.stripe{
+    margin: 10px;
+    display: flex;
+}
+.razorpay{
+    display: flex;
+    margin: 10px;
+}
+.cod{
+    display: flex;
+    margin: 10px;
+}
+.border{
+    border: 1px solid #b5b1b1;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.select{
+    width: 4px;
+    height: 100%;
+    margin-right: 8px;
+    background-color: rgb(96, 207, 96);
+    border-radius: 4px;
+    margin-left: 8px;
+}
 @media (max-width:750px) {
     .checkout{
         display: flex;

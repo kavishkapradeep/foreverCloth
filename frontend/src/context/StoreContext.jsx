@@ -216,7 +216,7 @@ const StoreContextProvider = (props) => {
     
     
     if (response.data.success) {
-      setCartItems(response.data.cartData);
+      setCartItems(response.data.cartData); //data base  name
     }
   } catch (error) {
     console.log(error);
@@ -238,7 +238,7 @@ const StoreContextProvider = (props) => {
  },[token])
 
   
-  const delivery_fee =10;   
+    const delivery_fee = 10;   
     
 
     const contextValue ={

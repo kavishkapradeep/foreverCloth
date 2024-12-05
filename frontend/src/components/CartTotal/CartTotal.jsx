@@ -5,7 +5,7 @@ import React, { useContext } from 'react'
 
 const CartTotal = () => {
 
-    const {getCartAmount} = useContext(StoreContext);
+    const {getCartAmount,delivery_fee} = useContext(StoreContext);
     
 
   return (
@@ -21,11 +21,11 @@ const CartTotal = () => {
         </div>
         <div className="total">
             <p>Shipping Fee</p>
-            <p className='shiping'> $2.00</p>
+            <p className='shiping'> ${delivery_fee}</p>
         </div>
         <div className="total">
             <b>Total</b>
-            <b className='total-amount'>${getCartAmount() ===0?0:getCartAmount() +2}.00</b>
+            <b className='total-amount'>${getCartAmount() ===0?0:getCartAmount() + delivery_fee}.00</b>
         </div>
         </div>
     </div>
