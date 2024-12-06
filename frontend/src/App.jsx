@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css'; 
 import Cart from './pages/Cart/Cart'
 import Checkout from './pages/Checkout/Checkout'
+import Verify from './pages/Verify/Verify'
 
 function App() {
   
@@ -35,6 +36,7 @@ function App() {
           <Route path='/product/:productId' element={<Product/>}/>
           <Route path='/cart' element={<Cart/>}></Route>
           <Route path='/checkout' element={<Checkout/>}/>
+          <Route path='/verify' element={<Verify/>}></Route>
        </Routes>
     </div>
     <Footer/>
