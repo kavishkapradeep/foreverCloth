@@ -23,7 +23,8 @@
     "mongoose": "^8.8.3",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.7",
-    "server": "^1.0.41",
+    "react-toastify": "^10.0.6",
+    "server": "^0.0.3",
     "stripe": "^17.4.0",
     "validator": "^13.12.0"
   }
