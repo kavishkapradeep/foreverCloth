@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { assets } from '../../assets/assets';
-import CartTotal from '../../components/CartTotal/CartTotal'
-import { StoreContext } from '../../context/StoreContext';
+import CartTotal from '../../components/CartTotal/CartTotal.jsx'
+import { StoreContext } from '../../context/StoreContext.jsx';
 
 
 import './Checkout.css'

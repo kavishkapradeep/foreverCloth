@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { assets } from '../../assets/assets'
 import CartTotal from '../../components/CartTotal/CartTotal'
-import { StoreContext } from '../../context/StoreContext'
+import { StoreContext } from '../../context/StoreContext.jsx'
 import './Cart.css'
 
 import React, { useContext, useEffect } from 'react'

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { StoreContext } from '../../context/StoreContext'
+import { StoreContext } from '../../context/StoreContext.jsx'
 import './MyOrders.css'
 
 
