@@ -5,9 +5,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server:{port:5173},
-  build: {
-    rollupOptions: {
-      external: ['react-toastify']
+  resolve: {
+    alias: {
+      // Ensure Vite resolves the react-toastify CSS properly
+      'react-toastify/dist/ReactToastify.css': 'node_modules/react-toastify/dist/ReactToastify.css'
     }
   }
 })
