@@ -3,12 +3,8 @@
   "builds": [
       {
           
-          "use": "@vercel/node",
-          "config": {
-              "includeFiles": [
-                  "dist/**"
-              ]
-          }
+          "use": "@vercel/node"
+          
       }
   ],
   "routes": [
