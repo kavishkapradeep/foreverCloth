@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import {Routes,Route} from 'react-router-dom'
 import './App.css'
+import ReactDOM from 'react-dom/client';
 import Home from './pages/Home/Home.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import Collection from './pages/Collection/Collection.jsx'
