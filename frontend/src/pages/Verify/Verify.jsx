@@ -26,6 +26,7 @@ const Verify = () => {
                 if (response.data.success) {
                     setCartItems({})
                     navigate('/myorders')
+                    toast.success(response.data.message)
                 }else{
                     navigate('/cart')
                 }

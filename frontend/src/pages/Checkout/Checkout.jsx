@@ -80,6 +80,7 @@ const Checkout = () => {
                         if (responseStripe.data.success) {
                             const {session_url} =responseStripe.data
                             window.location.replace(session_url)
+                            toast.success(response.data.message)
                         }else{
                             toast.error(responseStripe.data.message)
                         }
