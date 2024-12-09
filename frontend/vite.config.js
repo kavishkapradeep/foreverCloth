@@ -7,7 +7,14 @@ export default defineConfig({
   server:{port:5173},
   build: {
     rollupOptions: {
-      external: ['react-toastify'],
+      onwarn(warning, warn) {
+        // Skip specific warnings if needed
+        if (warning.code === 'UNRESOLVED_IMPORT') {
+          console.warn('Skipping unresolved import:', warning.source);
+          return;
+        }
+        warn(warning);
+      },
     },
   },
 })
