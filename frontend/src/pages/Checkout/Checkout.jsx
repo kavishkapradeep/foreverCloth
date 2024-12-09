@@ -68,6 +68,7 @@ const Checkout = () => {
                         if (response.data.success) {
                             setCartItems({})
                             navigate('/myorders')
+                            toast.success(response.data.message)
                         } else {
                             toast.error(response.data.message  )
                         }
