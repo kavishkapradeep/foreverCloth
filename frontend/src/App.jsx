@@ -30,12 +30,12 @@ function App() {
   return (
     <>
     
-    <div className="app">
+    <div className="app" id="root">
       <ToastContainer/>
        <Navbar />
        <Routes>
         <Route path='/login' element={<SignInSignUp/>}></Route>
-          <Route path='./' element={<Home/>}></Route>
+          <Route path='/' element={<Home/>}></Route>
           <Route path='/collection' element={<Collection/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/contact' element={<Contact/>}/>
