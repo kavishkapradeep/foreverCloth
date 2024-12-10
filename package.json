@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@rollup/plugin-commonjs": "^28.0.1",
-    "react-router-dom": "^7.0.2",
-    "vercel": "^28.18.5"
-  }
-}
