@@ -7,12 +7,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       // Example: Handle or ignore specific warnings
-      onwarn(warning, warn) {
-        if (warning.code === 'UNRESOLVED_IMPORT') {
-          return;  // Suppress unresolved import warnings
-        }
-        warn(warning);  // Log other warnings
-      },
+      
     },
   },
 });
