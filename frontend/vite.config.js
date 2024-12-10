@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       // Example: Handle or ignore specific warnings
-      
+      external: ['react-toastify'],
     },
   },
 });
