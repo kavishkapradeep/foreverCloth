@@ -5,20 +5,15 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      // Example of externalizing problematic packages
+      // Externalize problematic modules (e.g., react-toastify)
       external: ['react-toastify'],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
+      },
     },
-  },
-  server: {
-    port: 4000,
-    open: true,
-  },
-  onwarn(warning, warn) {
-    // Suppress specific warnings or log them
-    if (warning.code === 'UNRESOLVED_IMPORT') {
-      return;  // Ignore unresolved import warnings
-    }
-    warn(warning);  // Default behavior: log other warnings
   },
 });
 

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "vercel": "^39.2.0"
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "vercel": "^28.18.5"
   }
 }
