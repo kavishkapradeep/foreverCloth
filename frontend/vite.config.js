@@ -3,12 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  build: {
-    rollupOptions: {
-      external: ['react-toastify', 'react-toastify/dist/ReactToastify.css'],
-    },
-  },
+  server:{port:5174},
+  
 });
-
 
 
