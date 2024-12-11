@@ -32,7 +32,7 @@ function App() {
     <>
     
     <div className="app" id="root">
-      hd
+    
       <ToastContainer/>
        <Navbar />
        <Routes>
