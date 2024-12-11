@@ -3,11 +3,16 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      'react-toastify': require.resolve('react-toastify'),
+    },
+  },
   build: {
     rollupOptions: {
       onwarn(warning, warn) {
-        if (warning.code === 'SOME_WARNING_CODE') return; // Ignore specific warnings
-        warn(warning); // Log all other warnings
+        console.warn('Rollup warning:', warning);
+        warn(warning); // Log other warnings
       },
     },
   },
