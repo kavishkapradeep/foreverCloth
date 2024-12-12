@@ -13,13 +13,6 @@ import SignInSignUp from './components/SignINSignUp/SignInSignUp.jsx'
 import Product from './pages/Product/Product.jsx'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
-
-
-
-
-
 import Cart from './pages/Cart/Cart.jsx'
 import Checkout from './pages/Checkout/Checkout.jsx'
 import Verify from './pages/Verify/Verify.jsx'
