@@ -7,7 +7,13 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ['react-toastify'],
+      onwarn(warning, warn) {
+        // Ignore certain warnings or handle them differently
+        if (warning.code === 'UNRESOLVED_IMPORT' && warning.source === 'react-toastify') {
+          return; // Skip the warning for this specific import
+        }
+        warn(warning); // Log all other warnings
+      },
     },
   },
 });
