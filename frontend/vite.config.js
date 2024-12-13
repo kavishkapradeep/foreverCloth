@@ -3,6 +3,11 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: './', // Use './' for relative paths
+  base: './', 
+  build: {
+    rollupOptions: {
+      external: ['react-toastify'], // Externalize the module
+    },
+  },// Use './' for relative paths
 });
 
