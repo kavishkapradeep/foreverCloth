@@ -2,7 +2,7 @@ import  { createContext, useEffect, useState } from 'react'
 //import { products } from '../assets/assets.js'
 import { toast } from 'react-toastify'
 import axios from "axios"
-import { backendUrl } from '../../../admin/src/App'
+import { backendUrl } from '../App.jsx'
 
 export const StoreContext = createContext(null)
 

@@ -17,6 +17,8 @@ import Cart from './pages/Cart/Cart.jsx'
 import Checkout from './pages/Checkout/Checkout.jsx'
 import Verify from './pages/Verify/Verify.jsx'
 
+export const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 function App() {
   
   
