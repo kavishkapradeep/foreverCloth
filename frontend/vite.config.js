@@ -1,25 +1,8 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  root: './',
-  build: {
-    outDir: 'dist',
-    rollupOptions: {
-      onwarn(warning, warn) {
-        // Log all warnings to the console
-        console.warn('Rollup warning:', warning);
-
-        // Optionally suppress specific warnings
-        if (warning.code === 'UNRESOLVED_IMPORT') {
-          console.warn(`Unresolved import: ${warning.source}`);
-          return;
-        }
-
-        // Pass all other warnings to Rollup
-        warn(warning);
-      },
-    },
-  },
-});
+  server:{port:5173}
+})
