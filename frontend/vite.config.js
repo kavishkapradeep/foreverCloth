@@ -8,11 +8,11 @@ export default defineConfig({
     rollupOptions: {
       onwarn(warning, warn) {
         // Log all warnings to the console
-        console.log('Rollup warning:', warning);
+        console.warn('Rollup warning:', warning);
 
         // Optionally suppress specific warnings
         if (warning.code === 'UNRESOLVED_IMPORT') {
-          console.log(`Unresolved import: ${warning.source}`);
+          console.warn(`Unresolved import: ${warning.source}`);
           return;
         }
 
