@@ -8,7 +8,7 @@ const addToCart = async (req,res)=>{
 
         const userData = await userModel.findById(userId)
         let cartData =  await userData.cartData;
-
+        
         if (cartData[itemId]) {
             if (cartData[itemId][sizes]) {
                 cartData[itemId][sizes] +=1
